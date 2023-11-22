@@ -1,0 +1,33 @@
+steps:
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', '--single-branch', '--branch',
+         '$_BRANCH','$_REPO_URL',
+         '--depth', '1',
+         '--verbose']
+  id: 'Clone Repository'
+  
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', '*.py', '*.pkl', 'gs://$_PROJECT-vertex-default/pipeline_module/$_PIPELINE_NAME']
+  dir: 'penguin-vertex-training/modules'
+  id: 'Copy Modules'
+  waitFor: ['Clone Repository']
+
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', '*.csv', 'gs://$_PROJECT-vertex-default/data/$_PIPELINE_NAME']
+  dir: 'penguin-vertex-training/modules/data'
+  id: 'Copy Data'
+  waitFor: ['Copy Modules']
+
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', '*.txt', 'gs://$_PROJECT-vertex-default/best_hyperparameters/$_PIPELINE_NAME']
+  dir: 'penguin-vertex-training/modules/best_hyperparameters'
+  id: 'Copy Hyperparameter'
+  waitFor: ['Copy Data']
+
+- name: 'gcr.io/tfx-oss-public/tfx:1.14.0'
+  entrypoint: 'python'
+  args: ['kubeflow_runner.py']
+  dir: 'penguin-vertex-training/tfx-pipeline'
+  id: 'Run Pipeline'
+  waitFor: ['Copy Hyperparameter']
+
