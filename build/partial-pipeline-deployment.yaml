@@ -8,25 +8,25 @@ steps:
 
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', '*.py', '*.pkl', 'gs://$_PROJECT-vertex-default/pipeline_module/$_PIPELINE_NAME']
-  dir: 'sentiment-analysis-tfx/modules'
+  dir: 'penguine_tfx/modules'
   id: 'Copy Modules'
   waitFor: ['Clone Repository']
 
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', '*.csv', 'gs://$_PROJECT-vertex-default/data/$_PIPELINE_NAME']
-  dir: 'sentiment-analysis-tfx/modules/data'
+  dir: 'penguine_tfx/modules/data'
   id: 'Copy Data'
   waitFor: ['Copy Modules']
 
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', '*.txt', 'gs://$_PROJECT-vertex-default/best_hyperparameters/$_PIPELINE_NAME']
-  dir: 'sentiment-analysis-tfx/modules/best_hyperparameters'
+  dir: 'penguine_tfx/modules/best_hyperparameters'
   id: 'Copy Hyperparameter'
   waitFor: ['Copy Data']
 
 - name: 'gcr.io/tfx-oss-public/tfx:1.14.0'
   entrypoint: 'python'
   args: ['kubeflow_runner.py']
-  dir: 'penguin-vertex-training/tfx-pipeline'
+  dir: 'penguine_tfx/tfx-pipeline'
   id: 'Run Pipeline'
   waitFor: ['Copy Hyperparameter']

@@ -10,9 +10,9 @@ on:
 env:
   SUBSTITUTIONS: "
             _PROJECT = ${{ secrets.GCP_PROJECT_ID }},
-            _REGION = us-central1,
-            _PIPELINE_NAME = penguin-vertex-training,
-            _REPO_URL = https://github.com/Lastget/penguins_tfx,
+            _REGION = us-central1,\
+            _PIPELINE_NAME = penguine_tfx,\
+            _REPO_URL = https://github.com/Lastget/penguins_tfx,\
             _BRANCH = main,\
             "    
 jobs:

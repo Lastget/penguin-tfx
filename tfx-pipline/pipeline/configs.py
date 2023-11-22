@@ -5,7 +5,7 @@ GOOGLE_CLOUD_PROJECT = 'master-host-403612'
 GOOGLE_CLOUD_REGION = 'us-central1'      
 GCS_BUCKET_NAME = GOOGLE_CLOUD_PROJECT + '-vertex-default'         
 
-PIPELINE_NAME = 'penguin-vertex-training'
+PIPELINE_NAME = 'penguine_tfx'
 
 
 PIPELINE_ROOT = 'gs://{}/pipeline_root/{}'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
