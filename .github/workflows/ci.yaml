@@ -7,13 +7,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  _SUBSTITUTIONS: "_PROJECT = ${{secrets.GCP_PROJECT_ID}},\
-                  _REGION = us-central1,\
-                  _PIPELINE_NAME = penguine_tfx,\
-                  _REPO_URL = https://github.com/Lastget/penguins_tfx,\
-                  _BRANCH = main\
-                  "    
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,8 +21,6 @@ jobs:
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
-        with:
-          version: '>= 363.0.0'
 
       - name: check if something changed
         uses: dorny/paths-filter@v2.11.1
@@ -45,11 +36,19 @@ jobs:
         if: ${{steps.filter.outputs.pipeline == 'true'}}
         run: gcloud builds submit --no-source --timeout 60m \
           --config build/full-pipeline-deployment.yaml \
-          --substitutions $_SUBSTITUTIONS \
+          --substitutions _PROJECT = ${{secrets.GCP_PROJECT_ID}},\
+              _REGION = us-central1,\
+              _PIPELINE_NAME = penguine_tfx,\
+              _REPO_URL = https://github.com/Lastget/penguins_tfx,\
+              _BRANCH = main \ 
           --machine-type n1-highcpu-8
       - name: trigger cloud build based on modules changes
         if: ${{steps.filter.outputs.modules == 'true' && steps.filter.outputs.pipeline == 'false'}}
         run: gcloud builds submit --no-source --timeout 60m \
           --config build/partial-pipeline-deployment.yaml \
-          --substitutions $_SUBSTITUTIONS \
+          --substitutions _PROJECT = ${{secrets.GCP_PROJECT_ID}},\
+            _REGION = us-central1,\
+            _PIPELINE_NAME = penguine_tfx,\
+            _REPO_URL = https://github.com/Lastget/penguins_tfx,\
+            _BRANCH = main \ 
           --machine-type n1-highcpu-8
