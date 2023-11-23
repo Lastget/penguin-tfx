@@ -28,6 +28,8 @@ jobs:
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: '>= 363.0.0'
 
       - name: check if something changed
         uses: dorny/paths-filter@v2.11.1
