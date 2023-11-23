@@ -35,7 +35,7 @@ jobs:
       - name: trigger cloud build based on pipeline changes
         if: ${{steps.filter.outputs.pipeline == 'true'}}
         run: gcloud builds submit --no-source --timeout 60m \
-          --config build/full-pipeline-deployment.yaml \
+          --config 'build/full-pipeline-deployment.yaml' \
           --substitutions _PROJECT = ${{secrets.GCP_PROJECT_ID}},\
               _REGION = us-central1,\
               _PIPELINE_NAME = penguine_tfx,\
@@ -45,7 +45,7 @@ jobs:
       - name: trigger cloud build based on modules changes
         if: ${{steps.filter.outputs.modules == 'true' && steps.filter.outputs.pipeline == 'false'}}
         run: gcloud builds submit --no-source --timeout 60m \
-          --config build/partial-pipeline-deployment.yaml \
+          --config 'build/partial-pipeline-deployment.yaml' \
           --substitutions _PROJECT = ${{secrets.GCP_PROJECT_ID}},\
             _REGION = us-central1,\
             _PIPELINE_NAME = penguine_tfx,\
