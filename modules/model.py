@@ -109,4 +109,4 @@ def run_fn(fn_args: tfx.components.FnArgs):
     
     model.save(fn_args.serving_model_dir, save_format='tf')
 
-# trigger 11th times
+# trigger 12th times
