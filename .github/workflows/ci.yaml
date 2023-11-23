@@ -8,11 +8,11 @@ on:
   workflow_dispatch:
 
 env:
-  _SUBSTITUTIONS: "_PROJECT = ${{secrets.GCP_PROJECT_ID}},\
-                  _REGION = us-central1,\
-                  _PIPELINE_NAME = penguine_tfx,\
-                  _REPO_URL = https://github.com/Lastget/penguins_tfx,\
-                  _BRANCH = main\
+  _SUBSTITUTIONS: "_PROJECT=${{secrets.GCP_PROJECT_ID}},\
+                  _REGION=us-central1,\
+                  _PIPELINE_NAME=penguine_tfx,\
+                  _REPO_URL=https://github.com/Lastget/penguins_tfx,\
+                  _BRANCH=main\
                   "    
 jobs:
   build:
