@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  SUBSTITUTIONS: "
+  _SUBSTITUTIONS: "
             _PROJECT = ${{secrets.GCP_PROJECT_ID}},
             _REGION = us-central1,\
             _PIPELINE_NAME = penguine_tfx,\
@@ -44,11 +44,11 @@ jobs:
         if: ${{steps.filter.outputs.pipeline == 'true'}}
         run: gcloud builds submit --no-source --timeout=60m \
           --config=build/full-pipeline-deployment.yaml \
-          --substitutions=$SUBSTITUTIONS \
+          --substitutions=${_SUBSTITUTIONS} \
           --machine-type = n1-highcpu-8
       - name: trigger cloud build based on modules changes
         if: ${{steps.filter.outputs.modules == 'true' && steps.filter.outputs.pipeline == 'false'}}
         run: gcloud builds submit --no-source --timeout=60m \
           --config=build/partial-pipeline-deployment.yaml \
-          --substitutions=$SUBSTITUTIONS \
+          --substitutions=${_SUBSTITUTIONS} \
           --machine-type = n1-highcpu-8
