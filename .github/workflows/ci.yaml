@@ -41,13 +41,13 @@ jobs:
               - 'modules/**'
       - name: trigger cloud build based on pipeline changes
         if: ${{steps.filter.outputs.pipeline == 'true'}}
-        run: gcloud builds submit --no-source --timeout = 60m \
-          --config = build/full-pipeline-deployment.yaml \
-          --substitutions = $_SUBSTITUTIONS \
-          --machine-type = n1-highcpu-8
+        run: gcloud builds submit --no-source --timeout 60m \
+          --config build/full-pipeline-deployment.yaml \
+          --substitutions $_SUBSTITUTIONS \
+          --machine-type n1-highcpu-8
       - name: trigger cloud build based on modules changes
         if: ${{steps.filter.outputs.modules == 'true' && steps.filter.outputs.pipeline == 'false'}}
-        run: gcloud builds submit --no-source --timeout = 60m \
-          --config = build/partial-pipeline-deployment.yaml \
-          --substitutions = $_SUBSTITUTIONS \
-          --machine-type = n1-highcpu-8
+        run: gcloud builds submit --no-source --timeout 60m \
+          --config build/partial-pipeline-deployment.yaml \
+          --substitutions $_SUBSTITUTIONS \
+          --machine-type n1-highcpu-8
