@@ -7,11 +7,8 @@ GCS_BUCKET_NAME = GOOGLE_CLOUD_PROJECT + '-vertex-default'
 
 PIPELINE_NAME = 'penguine-tfx'
 
-
-PIPELINE_ROOT = 'gs://{}/pipeline_root/{}'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
-
 # Paths for users' Python module.
-MODULE_ROOT = 'gs://{}/pipeline_module/{}'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
+MODULE_ROOT = 'gs://{}/pipeline-modules/{}'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
 
 # Paths for users' data.
 DATA_ROOT = 'gs://{}/data/{}'.format(GCS_BUCKET_NAME, PIPELINE_NAME)

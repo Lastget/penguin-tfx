@@ -7,7 +7,7 @@ steps:
   id: 'Clone Repository'
   
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', '*.py', 'gs://$_PROJECT-vertex-default/pipeline_module/$_PIPELINE_NAME']
+  args: ['cp', '*.py', 'gs://$_PROJECT-vertex-default/pipeline-modules/$_PIPELINE_NAME']
   dir: 'penguine-tfx/modules'
   id: 'Copy Modules'
   waitFor: ['Clone Repository']
