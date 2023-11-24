@@ -5,7 +5,6 @@ from absl import logging
 
 from google.cloud import aiplatform
 from google.cloud.aiplatform import pipeline_jobs
-import logging
 
 
 PIPELINE_DEFINITION_FILE = configs.PIPELINE_NAME  + '_pipeline.json'
