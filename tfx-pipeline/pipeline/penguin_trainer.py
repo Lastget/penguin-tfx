@@ -1,4 +1,4 @@
-from pipeline import configs
+from . import configs
 from tfx import v1 as tfx
 
 VERTEX_JOB_SPEC = configs.VERTEX_JOB_SPEC

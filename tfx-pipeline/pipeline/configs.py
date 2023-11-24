@@ -5,7 +5,7 @@ GOOGLE_CLOUD_PROJECT = 'master-host-403612'
 GOOGLE_CLOUD_REGION = 'us-central1'      
 GCS_BUCKET_NAME = GOOGLE_CLOUD_PROJECT + '-vertex-default'         
 
-PIPELINE_NAME = 'penguine-tfx'
+PIPELINE_NAME = 'penguin-tfx'
 
 # Paths for users' Python module.
 MODULE_ROOT = 'gs://{}/{}/pipeline-modules'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
@@ -17,7 +17,6 @@ DATA_ROOT = 'gs://{}/{}/data'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
 ENDPOINT_NAME = 'prediction-' + PIPELINE_NAME
 
 # PIPELINE_IMAGE = 'us-central1-docker.pkg.dev/master-host-403612/cb-tfx/tfx-kfp:latest'
-
 VERTEX_JOB_SPEC = {
     'project': GOOGLE_CLOUD_PROJECT,
     'worker_pool_specs': [{
@@ -31,6 +30,7 @@ VERTEX_JOB_SPEC = {
         },
     }],
 }
+
 
 # For Pusher 
 VERTEX_SERVING_SPEC = {

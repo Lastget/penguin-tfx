@@ -8,25 +8,25 @@ steps:
 
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', '*.py', 'gs://$_PROJECT-vertex-default/$_PIPELINE_NAME/pipeline-modules']
-  dir: 'penguine-tfx/modules'
+  dir: 'penguin-tfx/modules'
   id: 'Copy Modules'
   waitFor: ['Clone Repository']
 
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', '*.csv', 'gs://$_PROJECT-vertex-default/$_PIPELINE_NAME/data']
-  dir: 'penguine-tfx/modules/data'
+  dir: 'penguin-tfx/modules/data'
   id: 'Copy Data'
   waitFor: ['Copy Modules']
 
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', '*.py', 'gs://$_PROJECT-vertex-default/$_PIPELINE_NAME/pipeline-modules']
-  dir: 'penguine-tfx/tfx-pipeline/pipeline'
+  dir: 'penguin-tfx/tfx-pipeline/pipeline'
   id: 'Copy Pipeline'
   waitFor: ['Copy Data']
 
 - name: 'gcr.io/tfx-oss-public/tfx:1.14.0'
   entrypoint: 'python'
   args: ['kubeflow_runner.py']
-  dir: 'penguine-tfx/tfx-pipeline'
+  dir: 'penguin-tfx/tfx-pipeline'
   id: 'Run Pipeline'
   waitFor: ['Copy Pipeline']
