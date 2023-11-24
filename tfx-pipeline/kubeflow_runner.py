@@ -8,6 +8,14 @@ from google.cloud.aiplatform import pipeline_jobs
 
 
 PIPELINE_DEFINITION_FILE = configs.PIPELINE_NAME  + '_pipeline.json'
+# TFX pipeline produces many output files and metadata. All output data will be
+# stored under this OUTPUT_DIR..
+OUTPUT_DIR = os.path.join('gs://', configs.GCS_BUCKET_NAME)
+
+# TFX produces two types of outputs, files and metadata.
+# - Files will be created under PIPELINE_ROOT directory.
+PIPELINE_ROOT = 'gs://{}/{}/'.format(configs.GCS_BUCKET_NAME, configs.PIPELINE_NAME)
+
 
 def run():
     runner = tfx.orchestration.experimental.KubeflowV2DagRunner(
@@ -16,7 +24,7 @@ def run():
     _ = runner.run(
         penguin_trainer._create_pipeline(
             pipeline_name = configs.PIPELINE_NAME,
-            pipeline_root = configs.PIPELINE_ROOT,
+            pipeline_root = PIPELINE_ROOT,
             data_root = configs.DATA_ROOT,
             module_file = os.path.join(configs.MODULE_ROOT, 'penguine_trainer.py'),
             endpoint_name = configs.ENDPOINT_NAME,

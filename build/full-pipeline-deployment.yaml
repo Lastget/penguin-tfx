@@ -7,13 +7,13 @@ steps:
   id: 'Clone Repository'
   
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', '*.py', 'gs://$_PROJECT-vertex-default/pipeline-modules/$_PIPELINE_NAME']
+  args: ['cp', '*.py', 'gs://$_PROJECT-vertex-default/$_PIPELINE_NAME/pipeline-modules']
   dir: 'penguine-tfx/modules'
   id: 'Copy Modules'
   waitFor: ['Clone Repository']
 
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', '*.csv', 'gs://$_PROJECT-vertex-default/data/$_PIPELINE_NAME']
+  args: ['cp', '*.csv', 'gs://$_PROJECT-vertex-default/$_PIPELINE_NAME/data']
   dir: 'penguine-tfx/modules/data'
   id: 'Copy Data'
   waitFor: ['Copy Modules']
