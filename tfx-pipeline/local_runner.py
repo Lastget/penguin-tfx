@@ -29,10 +29,7 @@ PIPELINE_DEFINITION_FILE = configs.PIPELINE_NAME  + '_pipeline.json'
 
 def run():
     """Define a local pipeline."""
-    runner = tfx.orchestration.experimental.KubeflowV2DagRunner(
-        config=tfx.orchestration.experimental.KubeflowV2DagRunnerConfig(),
-        output_filename=PIPELINE_DEFINITION_FILE)
-    _ = runner.run(
+    tfx.orchestration.LocalDagRunner().run(
         penguin_trainer._create_pipeline(
             pipeline_name = configs.PIPELINE_NAME,
             pipeline_root = PIPELINE_ROOT,
