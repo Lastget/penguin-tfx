@@ -21,7 +21,7 @@ VERTEX_JOB_SPEC = {
     'project': GOOGLE_CLOUD_PROJECT,
     'worker_pool_specs': [{
         'machine_spec': {
-            'machine_type': 'n1-standard-4',
+            'machine_type': 'e2-highcpu-8',
         },
         'replica_count': 1,
         'container_spec': {
