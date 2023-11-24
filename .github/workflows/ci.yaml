@@ -10,7 +10,7 @@ on:
 env:
   _SUBSTITUTIONS: "_PROJECT=${{ secrets.GCP_PROJECT_ID }},\
                     _PIPELINE_NAME=penguine-tfx,\
-                    _REPO_URL=https://github.com/Lastget/penguins_tfx,\
+                    _REPO_URL=https://github.com/Lastget/penguine-tfx,\
                     _BRANCH=main"
 jobs:
   build:
