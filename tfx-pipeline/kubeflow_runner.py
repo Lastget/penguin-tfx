@@ -26,7 +26,7 @@ def run():
             pipeline_name = configs.PIPELINE_NAME,
             pipeline_root = PIPELINE_ROOT,
             data_root = configs.DATA_ROOT,
-            module_file = os.path.join(configs.MODULE_ROOT, 'penguine_trainer.py'),
+            module_file = os.path.join(configs.MODULE_ROOT, 'pipeline', 'penguine_trainer.py'),
             endpoint_name = configs.ENDPOINT_NAME,
             project_id = configs.GOOGLE_CLOUD_PROJECT,
             region = configs.GOOGLE_CLOUD_REGION,

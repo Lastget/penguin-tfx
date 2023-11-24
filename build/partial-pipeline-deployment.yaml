@@ -18,9 +18,15 @@ steps:
   id: 'Copy Data'
   waitFor: ['Copy Modules']
 
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', '*.py', 'gs://$_PROJECT-vertex-default/$_PIPELINE_NAME/pipeline']
+  dir: 'penguine-tfx/tfx-pipeline/pipeline'
+  id: 'Copy Pipeline'
+  waitFor: ['Copy Data']
+
 - name: 'gcr.io/tfx-oss-public/tfx:1.14.0'
   entrypoint: 'python'
   args: ['kubeflow_runner.py']
   dir: 'penguine-tfx/tfx-pipeline'
   id: 'Run Pipeline'
-  waitFor: ['Copy Data']
+  waitFor: ['Copy Pipeline']
