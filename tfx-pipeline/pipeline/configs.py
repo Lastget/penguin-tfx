@@ -21,12 +21,12 @@ VERTEX_JOB_SPEC = {
     'project': GOOGLE_CLOUD_PROJECT,
     'worker_pool_specs': [{
         'machine_spec': {
-            'machine_type': 'e2-highcpu-8',
+            'machine_type': 'e2-standard-4',
         },
         'replica_count': 1,
         'container_spec': {
             # from public tfx image
-            'image_uri': 'gcr.io/tfx-oss-public/tfx:1.14.0',
+            'image_uri': 'gcr.io/tfx-oss-public/tfx:1.14.0', 
         },
     }],
 }
@@ -36,6 +36,6 @@ VERTEX_JOB_SPEC = {
 VERTEX_SERVING_SPEC = {
     'project_id': GOOGLE_CLOUD_PROJECT,
     'endpoint_name': ENDPOINT_NAME,
-    'machine_type': 'n1-standard-4',
+    'machine_type': 'e2-standard-4',
 }
 
