@@ -42,14 +42,12 @@ jobs:
         run: | 
           gcloud builds submit --no-source --timeout 60m \
           --config build/full-pipeline-deployment.yaml \
-          --region us-central1 \
           --substitutions $_SUBSTITUTIONS \
           --machine-type e2-highcpu-8
       - name: trigger cloud build based on modules changes
         if: ${{steps.filter.outputs.modules == 'true' && steps.filter.outputs.pipeline == 'false'}}
         run: |
           gcloud builds submit --no-source --timeout 60m \
-          --region us-central1 \
           --config build/partial-pipeline-deployment.yaml \
           --substitutions $_SUBSTITUTIONS \
           --machine-type e2-highcpu-8
