@@ -1,14 +1,14 @@
 from tfx import v1 as tfx
-from typing import List, Optional, Text, Dict
+from typing import Optional, Text, Dict
 from tfx.components import CsvExampleGen, Trainer, Pusher
 
 
 
-def _create_pipeline(pipeline_name: str, 
-                     pipeline_root: str, 
-                     data_root: str,
-                     module_file: str,
-                     serving_model_dir: str,
+def _create_pipeline(pipeline_name: Text, 
+                     pipeline_root: Text, 
+                     data_root: Text,
+                     module_file: Text,
+                     serving_model_dir: Text,
                      vertex_job_spec: Optional[Dict[Text,Text]] = None,
                      vertex_serving_spec: Optional[Dict[Text,Text]] = None,
                      region: Optional[Text] = 'us-central1', 

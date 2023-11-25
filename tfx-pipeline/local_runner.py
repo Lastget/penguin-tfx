@@ -18,9 +18,6 @@ OUTPUT_DIR = '.'
 PIPELINE_ROOT = os.path.join(OUTPUT_DIR, 'tfx_pipeline_output',
                              configs.PIPELINE_NAME)
 
-METADATA_PATH = os.path.join(OUTPUT_DIR, 'tfx_metadata', configs.PIPELINE_NAME,
-                             'metadata.db')
-
 # The last component of the pipeline, "Pusher" will produce serving model under
 # SERVING_MODEL_DIR.
 SERVING_MODEL_DIR = os.path.join(PIPELINE_ROOT, 'serving_model')
@@ -30,14 +27,14 @@ PIPELINE_DEFINITION_FILE = configs.PIPELINE_NAME  + '_pipeline.json'
 
 def run():
     """Define a local pipeline."""
-    tfx.orchestration.LocalDagRunner().run(
-        penguin_trainer._create_pipeline(
+    my_pipeline =  penguin_trainer._create_pipeline(
             pipeline_name = configs.PIPELINE_NAME,
             pipeline_root = PIPELINE_ROOT,
             data_root = configs.LOCAL_DATA_PATH,
             module_file = configs.LOCAL_TRAIN_MODULE_FILE,
             serving_model_dir = SERVING_MODEL_DIR,
-            use_gpu = False))
+            use_gpu = False)
+    tfx.orchestration.LocalDagRunner().run(my_pipeline)
 
 
 if __name__ == '__main__':
