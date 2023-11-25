@@ -15,6 +15,7 @@ OUTPUT_DIR = os.path.join('gs://', configs.GCS_BUCKET_NAME)
 # TFX produces two types of outputs, files and metadata.
 # - Files will be created under PIPELINE_ROOT directory.
 PIPELINE_ROOT = 'gs://{}/{}/'.format(configs.GCS_BUCKET_NAME, configs.PIPELINE_NAME)
+SERVING_MODEL_DIR = os.path.join(PIPELINE_ROOT, 'serving_model')
 
 
 def run():
@@ -26,9 +27,10 @@ def run():
             pipeline_name = configs.PIPELINE_NAME,
             pipeline_root = PIPELINE_ROOT,
             data_root = configs.DATA_ROOT,
-            module_file = os.path.join(configs.MODULE_ROOT, 'penguin_trainer.py'),
-            endpoint_name = configs.ENDPOINT_NAME,
-            project_id = configs.GOOGLE_CLOUD_PROJECT,
+            module_file = os.path.join(configs.MODULE_ROOT, 'model.py'),
+            serving_model_dir = SERVING_MODEL_DIR,
+            vertex_job_spec = configs.VERTEX_JOB_SPEC,
+            vertex_serving_spec = configs.VERTEX_SERVING_SPEC,
             region = configs.GOOGLE_CLOUD_REGION,
             use_gpu = False))
 
