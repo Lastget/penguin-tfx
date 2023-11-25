@@ -27,6 +27,7 @@ def _create_pipeline(pipeline_name: Text,
         examples=example_gen.outputs['examples'],
         train_args=tfx.proto.TrainArgs(num_steps=100),
         eval_args=tfx.proto.EvalArgs(num_steps=5),
+        custom_config = {'use_gpu': use_gpu }
     )
 
     if use_gpu:
@@ -45,6 +46,7 @@ def _create_pipeline(pipeline_name: Text,
 
         trainer = tfx.extensions.google_cloud_ai_platform.Trainer(**trainer_args)
         logging.info("Pipeline vertex Trainer done.")
+
     else:
         trainer = Trainer(**trainer_args)
         logging.info("Pipeline local Trainer done.")
