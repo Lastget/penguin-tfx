@@ -8,17 +8,17 @@ PIPELINE_NAME = 'penguin-tfx'
 
 ## GCP 
 # Paths for users' data.
-DATA_ROOT = 'gs://{}/{}/data/'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
-TRAIN_MODULE_FILE = 'gs://{}/{}/pipeline-modules/model.py'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
+GCP_DATA_ROOT = 'gs://{}/{}/data/'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
+GCP_TRAIN_MODULE_FILE = 'gs://{}/{}/pipeline-modules/model.py'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
 
-# Paths for users' Python module.
-MODULE_ROOT = 'gs://{}/{}/pipeline-modules/'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
+# Paths for u   sers' Python module.
+GCP_MODULE_ROOT = 'gs://{}/{}/pipeline-modules/'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
 # Name of Vertex AI Endpoint.
 ENDPOINT_NAME = 'prediction-' + PIPELINE_NAME
 
 # LOCAL
 LOCAL_TRAIN_MODULE_FILE = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), r'../..', 'modules', 'model.py'))
-LOCAL_DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), r'../..', 'modules', 'data'))
+LOCAL_DATA_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), r'../..', 'modules', 'data'))
 
 
 # PIPELINE_IMAGE = 'us-central1-docker.pkg.dev/master-host-403612/cb-tfx/tfx-kfp:latest'

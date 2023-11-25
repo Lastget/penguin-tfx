@@ -1,5 +1,5 @@
 import os 
-from pipeline import configs, penguin_trainer
+from pipeline import configs, run_pipeline
 from tfx import v1 as tfx
 from absl import logging
 
@@ -23,11 +23,11 @@ def run():
         config=tfx.orchestration.experimental.KubeflowV2DagRunnerConfig(),
         output_filename=PIPELINE_DEFINITION_FILE)
     _ = runner.run(
-        penguin_trainer._create_pipeline(
+        run_pipeline._create_pipeline(
             pipeline_name = configs.PIPELINE_NAME,
             pipeline_root = PIPELINE_ROOT,
-            data_root = configs.DATA_ROOT,
-            module_file = os.path.join(configs.MODULE_ROOT, 'model.py'),
+            data_root = configs.GCP_DATA_ROOT,
+            module_file = os.path.join(configs.GCP_MODULE_ROOT, 'model.py'),
             serving_model_dir = SERVING_MODEL_DIR,
             vertex_job_spec = configs.VERTEX_JOB_SPEC,
             vertex_serving_spec = configs.VERTEX_SERVING_SPEC,

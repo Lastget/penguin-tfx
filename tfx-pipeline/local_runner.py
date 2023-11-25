@@ -1,7 +1,7 @@
 import os
 from absl import logging
-from pipeline import configs
-from pipeline import penguin_trainer
+from pipeline import configs 
+from pipeline import run_pipeline
 from tfx import v1 as tfx
 
 
@@ -24,7 +24,7 @@ SERVING_MODEL_DIR = os.path.join(PIPELINE_ROOT, 'serving_model')
 
 def run():
     """Define a local pipeline."""
-    my_pipeline =  penguin_trainer._create_pipeline(
+    my_pipeline =  run_pipeline._create_pipeline(
             pipeline_name = configs.PIPELINE_NAME,
             pipeline_root = PIPELINE_ROOT,
             data_root = configs.LOCAL_DATA_PATH,
