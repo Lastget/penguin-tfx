@@ -1,4 +1,4 @@
-
+import os
 from tfx import v1 as tfx
 
 GOOGLE_CLOUD_PROJECT = 'master-host-403612'     
