@@ -37,7 +37,7 @@ def _create_pipeline(pipeline_name: Text,
             'use_gpu': use_gpu,
         }
 
-        trainer = tfx.extensions.google_cloud_ai_platform.Trainer(trainer_args)
+        trainer = tfx.extensions.google_cloud_ai_platform.Trainer(**trainer_args)
     else:
         trainer = Trainer(**trainer_args)
 
