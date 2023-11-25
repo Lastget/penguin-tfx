@@ -2,20 +2,13 @@ import os
 from pipeline import configs, run_pipeline
 from tfx import v1 as tfx
 from absl import logging
-
 from google.cloud import aiplatform
 from google.cloud.aiplatform import pipeline_jobs
 
 
 PIPELINE_DEFINITION_FILE = configs.PIPELINE_NAME  + '_pipeline.json'
-# TFX pipeline produces many output files and metadata. All output data will be
-# stored under this OUTPUT_DIR..
-OUTPUT_DIR = os.path.join('gs://', configs.GCS_BUCKET_NAME)
 
 # TFX produces two types of outputs, files and metadata.
-# - Files will be created under PIPELINE_ROOT directory.
-PIPELINE_ROOT = 'gs://{}/{}/'.format(configs.GCS_BUCKET_NAME, configs.PIPELINE_NAME)
-SERVING_MODEL_DIR = os.path.join(PIPELINE_ROOT, 'serving_model')
 
 
 def run():
@@ -25,10 +18,9 @@ def run():
     _ = runner.run(
         run_pipeline._create_pipeline(
             pipeline_name = configs.PIPELINE_NAME,
-            pipeline_root = PIPELINE_ROOT,
+            pipeline_root = configs.GCP_PIPELINE_ROOT,
             data_root = configs.GCP_DATA_ROOT,
-            module_file = os.path.join(configs.GCP_MODULE_ROOT, 'model.py'),
-            serving_model_dir = SERVING_MODEL_DIR,
+            training_module = os.path.join(configs.GCP_MODULE_ROOT, 'model.py'),
             vertex_job_spec = configs.VERTEX_JOB_SPEC,
             vertex_serving_spec = configs.VERTEX_SERVING_SPEC,
             region = configs.GOOGLE_CLOUD_REGION,

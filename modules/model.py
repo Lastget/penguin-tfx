@@ -107,7 +107,7 @@ def run_fn(fn_args: tfx.components.FnArgs):
     else:
         with strategy.scope():
             model = _make_keras_model()
-            logging.info("Built model.")
+            logging.info("Built model with strategy.")
 
     model.fit(
         train_dataset,
