@@ -2,11 +2,11 @@ from typing import List
 from absl import logging 
 import tensorflow as tf 
 from tensorflow import keras 
-from tensorflow_metadata.proto.v0 import schema_pb2
 from tensorflow_transform.tf_metadata import schema_utils
 
 from tfx import v1 as tfx
 from tfx_bsl.public import tfxio
+from tensorflow_metadata.proto.v0 import schema_pb2
 
 _FEATURE_KEYS = [
     'culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g'
@@ -20,13 +20,14 @@ _FEATURE_SPEC = {
     **{
         feature: tf.io.FixedLenFeature(shape=[1], dtype=tf.float32)
         for feature in _FEATURE_KEYS
-    }, _LABEL_KEY: tf.io.FixedLenFeature(shape=[1], dtype=tf.int64)
+    }, 
+    _LABEL_KEY: tf.io.FixedLenFeature(shape=[1], dtype=tf.int64)
 }
 
 def _input_fn(file_pattern: List[str],
               data_accessor: tfx.components.DataAccessor,
               schema: schema_pb2.Schema,
-              batch_size: int) -> tf.data.Dataset:
+              batch_size: int = 200) -> tf.data.Dataset:
     """Generates features and label for training.
 
     Args:
@@ -40,6 +41,8 @@ def _input_fn(file_pattern: List[str],
         A dataset that contains (features, indices) tuple where features is a
         dictionary of Tensors, and indices is a single Tensor of label indices.
     """
+    
+
     return data_accessor.tf_dataset_factory(
       file_pattern,
       tfxio.TensorFlowDatasetOptions(batch_size=batch_size, label_key=_LABEL_KEY), 
@@ -87,26 +90,33 @@ def run_fn(fn_args: tfx.components.FnArgs):
         fn_args.data_accessor,
         schema,
         batch_size=_TRAIN_BATCH_SIZE)
+    logging.info('train data input.')
     
     eval_dataset = _input_fn(
         fn_args.eval_files,
         fn_args.data_accessor,
         schema,
         batch_size=_EVAL_BATCH_SIZE)
+    logging.info('eval data input.')
     
     # If we have a distribution strategy, build a model in a strategy scope.
     strategy = _get_distribution_strategy(fn_args)
     if strategy is None:
         model = _make_keras_model()
+        logging.info("Built model.")
     else:
         with strategy.scope():
             model = _make_keras_model()
+            logging.info("Built model.")
+
     model.fit(
         train_dataset,
         steps_per_epoch=fn_args.train_steps,
         validation_data=eval_dataset,
         validation_steps=fn_args.eval_steps)
+    logging.info("Train model.")
     
     model.save(fn_args.serving_model_dir, save_format='tf')
+    logging.info("Saved model.")
 
 # trigger 21th times

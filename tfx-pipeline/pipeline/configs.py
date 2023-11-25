@@ -1,17 +1,13 @@
 import os
-
+PIPELINE_NAME = 'penguin-tfx'
 GOOGLE_CLOUD_PROJECT = 'master-host-403612'     
 GOOGLE_CLOUD_REGION = 'us-central1'      
 GCS_BUCKET_NAME = GOOGLE_CLOUD_PROJECT + '-vertex-default'         
-
-PIPELINE_NAME = 'penguin-tfx'
 
 ## GCP 
 # Paths for users' data.
 GCP_DATA_ROOT = 'gs://{}/{}/data/'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
 GCP_TRAIN_MODULE_FILE = 'gs://{}/{}/pipeline-modules/model.py'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
-
-# Paths for u   sers' Python module.
 GCP_MODULE_ROOT = 'gs://{}/{}/pipeline-modules/'.format(GCS_BUCKET_NAME, PIPELINE_NAME)
 # Name of Vertex AI Endpoint.
 ENDPOINT_NAME = 'prediction-' + PIPELINE_NAME
