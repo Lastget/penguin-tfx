@@ -22,9 +22,6 @@ PIPELINE_ROOT = os.path.join(OUTPUT_DIR, 'tfx_pipeline_output',
 # SERVING_MODEL_DIR.
 SERVING_MODEL_DIR = os.path.join(PIPELINE_ROOT, 'serving_model')
 
-PIPELINE_DEFINITION_FILE = configs.PIPELINE_NAME  + '_pipeline.json'
-
-
 def run():
     """Define a local pipeline."""
     my_pipeline =  penguin_trainer._create_pipeline(
@@ -32,8 +29,8 @@ def run():
             pipeline_root = PIPELINE_ROOT,
             data_root = configs.LOCAL_DATA_PATH,
             module_file = configs.LOCAL_TRAIN_MODULE_FILE,
-            serving_model_dir = SERVING_MODEL_DIR,
-            use_gpu = False)
+            serving_model_dir = SERVING_MODEL_DIR
+            )
     tfx.orchestration.LocalDagRunner().run(my_pipeline)
 
 

@@ -48,17 +48,17 @@ def _create_pipeline(pipeline_name: Text,
       'model': trainer.outputs['model'],
     } 
 
-    if vertex_serving_spec is not None:
-        #cpu pre-built
-        serving_image = 'us-docker.pkg.dev/vertex-ai/prediction/tf2-cpu.2-6:latest'
+    serving_image = 'us-docker.pkg.dev/vertex-ai/prediction/tf2-cpu.2-6:latest'
 
-        if use_gpu:
-            vertex_serving_spec.update({
-                'accelerator_type': 'NVIDIA_TESLA_K80',
-                'accelerator_count': 1
-            })
-            # gpu
-            serving_image = 'us-docker.pkg.dev/vertex-ai/prediction/tf2-gpu.2-6:latest'
+    if use_gpu:
+        vertex_serving_spec.update({
+            'accelerator_type': 'NVIDIA_TESLA_K80',
+            'accelerator_count': 1
+        })
+        # gpu
+        serving_image = 'us-docker.pkg.dev/vertex-ai/prediction/tf2-gpu.2-6:latest'
+
+    if vertex_serving_spec is not None:
         pusher_args['custom_config'] = {
             tfx.extensions.google_cloud_ai_platform.ENABLE_VERTEX_KEY: True,
             tfx.extensions.google_cloud_ai_platform.VERTEX_REGION_KEY: region,
